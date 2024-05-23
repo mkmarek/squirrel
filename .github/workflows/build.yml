@@ -24,7 +24,6 @@ jobs:
         cd build
         cmake .. -G "Ninja" \
           -DCMAKE_C_COMPILER=i686-w64-mingw32-gcc \
-          -DCMAKE_CXX_COMPILER=i686-w64-mingw32-g++ \
           -DCMAKE_MAKE_PROGRAM=ninja \
           -DCMAKE_BUILD_WITH_INSTALL_RPATH=TRUE \
           -DCMAKE_EXE_LINKER_FLAGS="-static-libgcc -static-libstdc++ -lstdc++ -lgcc_s"
@@ -55,7 +54,6 @@ jobs:
         cd build
         cmake .. -G "Ninja" \
           -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
-          -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ \
           -DCMAKE_MAKE_PROGRAM=ninja \
           -DCMAKE_BUILD_WITH_INSTALL_RPATH=TRUE \
           -DCMAKE_EXE_LINKER_FLAGS="-static-libgcc -static-libstdc++ -lstdc++ -lgcc_s"

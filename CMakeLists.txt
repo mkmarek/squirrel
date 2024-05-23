@@ -3,7 +3,7 @@ project(squirrel
   VERSION 3.2
   DESCRIPTION "The Squirrel programming language"
   HOMEPAGE_URL "http://squirrel-lang.org/"
-  LANGUAGES C CXX
+  LANGUAGES C
   )
 
 option(DISABLE_STATIC "Avoid building/installing static libraries.")
@@ -18,7 +18,6 @@ include(GNUInstallDirs)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}")
-set(CMAKE_CXX_STANDARD 11)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   add_compile_options(
