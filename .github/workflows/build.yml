@@ -1,0 +1,92 @@
+name: CMake Build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-mingw32:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-mingw-w64-i686 g++-mingw-w64-i686 ninja-build
+
+    - name: Create build directory
+      run: mkdir build
+
+    - name: Run CMake
+      run: |
+        cd build
+        cmake .. -G "Ninja" \
+          -DCMAKE_C_COMPILER=i686-w64-mingw32-gcc \
+          -DCMAKE_CXX_COMPILER=i686-w64-mingw32-g++ \
+          -DCMAKE_MAKE_PROGRAM=ninja \
+          -DCMAKE_BUILD_WITH_INSTALL_RPATH=TRUE \
+          -DCMAKE_EXE_LINKER_FLAGS="-static-libgcc -static-libstdc++ -lstdc++ -lgcc_s"
+        ninja
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: mingw32-build
+        path: build/
+
+  build-mingw64:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 ninja-build
+
+    - name: Create build directory
+      run: mkdir build
+
+    - name: Run CMake
+      run: |
+        cd build
+        cmake .. -G "Ninja" \
+          -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
+          -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ \
+          -DCMAKE_MAKE_PROGRAM=ninja \
+          -DCMAKE_BUILD_WITH_INSTALL_RPATH=TRUE \
+          -DCMAKE_EXE_LINKER_FLAGS="-static-libgcc -static-libstdc++ -lstdc++ -lgcc_s"
+        ninja
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: mingw64-build
+        path: build/
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: sudo apt-get install -y cmake build-essential
+
+    - name: Create build directory
+      run: mkdir build
+
+    - name: Run CMake
+      run: |
+        cd build
+        cmake ..
+        make
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: linux-build
+        path: build/
